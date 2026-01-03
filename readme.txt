@@ -18,7 +18,7 @@ The widget displays key WooCommerce metrics such as daily sales, revenue trends,
 
 No setup required. Just install, activate, and view your store insights every time you open the dashboard.
 
-Perfect for store owners, managers, and agencies who want fast, actionable insights.
+Perfect for store owners, managers, and agencies who want fast, clear insights.
 
 == Key Features ==
 

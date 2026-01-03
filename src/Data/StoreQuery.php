@@ -35,36 +35,42 @@ class StoreQuery {
         'best_30'     => self::best_performers( $month_ago, $now ),
         'customers'   => self::customers( $week_ago ),
         'health'      => self::health_signals( $week_ago, $now ),
-        'operations'  => self::operational_overview( $week_ago, $now ),
+        'operations'  => self::operational_overview(),
       ),
     );
   }
 
   // Section builders.
   private static function store_today( int $start, int $end ): array {
+    $orders  = self::count_orders( $start, $end );
+    $revenue = self::sum_revenue( $start, $end );
+    $refunds = self::sum_refunds( $start, $end );
+
     return array(
       'title'  => __( 'Store Today', 'store-insights-for-woocommerce' ),
       'period' => __( 'Today (00:00 -> now)', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'Orders', 'store-insights-for-woocommerce' ),
-          'value' => self::count_orders( $start, $end ),
+          'value' => $orders,
         ),
         array(
           'label' => __( 'Revenue', 'store-insights-for-woocommerce' ),
-          'value' => wc_price( self::sum_revenue( $start, $end ) ),
+          'value' => wc_price( $revenue ),
         ),
         array(
           'label' => __( 'Refunds', 'store-insights-for-woocommerce' ),
-          'value' => wc_price( self::sum_refunds( $start, $end ) ),
+          'value' => wc_price( $refunds ),
         ),
       ),
     );
   }
 
   private static function last_7_days( int $start, int $end ): array {
-    $orders  = self::count_orders( $start, $end );
-    $revenue = self::sum_revenue( $start, $end );
+    $orders          = self::count_orders( $start, $end );
+    $revenue         = self::sum_revenue( $start, $end );
+    $avg_order_value = self::avg_order_value( $start, $end );
+    $refunds         = self::sum_refunds( $start, $end );
 
     return array(
       'title'  => __( 'Last 7 Days', 'store-insights-for-woocommerce' ),
@@ -79,92 +85,102 @@ class StoreQuery {
           'value' => wc_price( $revenue ),
         ),
         array(
-          'label' => __( 'Refunds', 'store-insights-for-woocommerce' ),
-          'value' => wc_price( self::sum_refunds( $start, $end ) ),
+          'label' => __( 'Avg order value', 'store-insights-for-woocommerce' ),
+          'value' => $avg_order_value,
         ),
         array(
-          'label' => __( 'Avg order value', 'store-insights-for-woocommerce' ),
-          'value' => $orders > 0 ? wc_price( $revenue / $orders ) : __( 'No data yet', 'store-insights-for-woocommerce' ),
+          'label' => __( 'Refunds', 'store-insights-for-woocommerce' ),
+          'value' => wc_price( $refunds ),
         ),
       ),
     );
   }
 
   private static function best_performers( int $start, int $end ): array {
+    $best_product       = self::best_product( $start, $end );
+    $best_category      = self::best_category( $start, $end );
+    $top_coupon         = self::top_coupon( $start, $end );
+    $top_payment_method = self::top_payment_method( $start, $end );
+
     return array(
       'title'  => __( 'Best Performers', 'store-insights-for-woocommerce' ),
       'period' => __( 'Last 30 days', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'Best selling product', 'store-insights-for-woocommerce' ),
-          'value' => self::best_product( $start, $end ),
+          'value' => $best_product,
         ),
         array(
           'label' => __( 'Best category', 'store-insights-for-woocommerce' ),
-          'value' => self::best_category( $start, $end ),
+          'value' => $best_category,
+        ),
+        array(
+          'label' => __( 'Top coupon', 'store-insights-for-woocommerce' ),
+          'value' => $top_coupon,
         ),
         array(
           'label' => __( 'Top payment method', 'store-insights-for-woocommerce' ),
-          'value' => self::top_payment_method( $start, $end ),
+          'value' => $top_payment_method,
         ),
       ),
     );
   }
 
   private static function customers( int $week_ago ): array {
+    $new_customers   = self::new_customers( $week_ago );
+    $total_customers = self::total_customers();
+
     return array(
       'title'  => __( 'Customers', 'store-insights-for-woocommerce' ),
-      'period' => __( 'Mixed periods', 'store-insights-for-woocommerce' ),
+      'period' => __( '*registered customers', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'New customers (7 days)', 'store-insights-for-woocommerce' ),
-          'value' => self::new_customers( $week_ago ),
+          'value' => $new_customers,
         ),
         array(
           'label' => __( 'Total customers', 'store-insights-for-woocommerce' ),
-          'value' => self::total_customers(),
+          'value' => $total_customers,
         ),
       ),
     );
   }
 
   private static function health_signals( int $start, int $end ): array {
+    $refund_rate   = self::refund_rate( $start, $end );
+    $revenue_trend = self::revenue_trend( $start, $end );
+
     return array(
       'title'  => __( 'Quick Health Signals', 'store-insights-for-woocommerce' ),
       'period' => __( 'Last 7 days', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'Refund rate', 'store-insights-for-woocommerce' ),
-          'value' => self::refund_rate( $start, $end ),
+          'value' => $refund_rate,
         ),
         array(
           'label' => __( 'Revenue trend vs previous week', 'store-insights-for-woocommerce' ),
-          'value' => self::revenue_trend( $start, $end ),
+          'value' => $revenue_trend,
         ),
       ),
     );
   }
 
-  private static function operational_overview( int $start, int $end ): array {
+  private static function operational_overview(): array {
+    $orders_pending_processing = self::orders_pending_processing();
+    $low_stock_products        = self::low_stock_count();
+
     return array(
       'title'  => __( 'Operational Overview', 'store-insights-for-woocommerce' ),
       'period' => __( 'Mixed periods', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'Avg order value (7 days)', 'store-insights-for-woocommerce' ),
-          'value' => self::avg_order_value( $start, $end ),
-        ),
-        array(
           'label' => __( 'Orders pending / processing', 'store-insights-for-woocommerce' ),
-          'value' => self::orders_pending_processing(),
+          'value' => $orders_pending_processing,
         ),
         array(
           'label' => __( 'Low stock products', 'store-insights-for-woocommerce' ),
-          'value' => self::low_stock_count(),
-        ),
-        array(
-          'label' => __( 'Top coupon (30 days)', 'store-insights-for-woocommerce' ),
-          'value' => self::top_coupon( $start, $end ),
+          'value' => $low_stock_products,
         ),
       ),
     );
@@ -224,6 +240,15 @@ class StoreQuery {
     }
 
     return round( $sum, 2 );
+  }
+
+  private static function avg_order_value( int $start, int $end ): string {
+    $orders  = self::count_orders( $start, $end );
+    $revenue = self::sum_revenue( $start, $end );
+
+    return $orders > 0
+      ? wc_price( $revenue / $orders )
+      : __( 'No data yet', 'store-insights-for-woocommerce' );
   }
 
   private static function best_product( int $start, int $end ): string {
@@ -289,6 +314,31 @@ class StoreQuery {
     return $term && ! is_wp_error( $term ) ? $term->name : __( 'Unknown', 'store-insights-for-woocommerce' );
   }
 
+  private static function top_coupon( int $start, int $end ): string {
+    $query = new \WC_Order_Query( array(
+      'status'       => array( 'wc-completed', 'wc-processing' ),
+      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
+      'return'       => 'objects',
+      'limit'        => -1,
+    ) );
+
+    $coupons = array();
+
+    foreach ( $query->get_orders() as $order ) {
+      foreach ( $order->get_coupon_codes() as $code ) {
+        $coupons[ $code ] = ( $coupons[ $code ] ?? 0 ) + 1;
+      }
+    }
+
+    if ( empty( $coupons ) ) {
+      return __( 'No coupons used', 'store-insights-for-woocommerce' );
+    }
+
+    arsort( $coupons );
+
+    return array_key_first( $coupons );
+  }
+
   private static function top_payment_method( int $start, int $end ): string {
     $query = new \WC_Order_Query( array(
       'status'       => array( 'wc-completed', 'wc-processing' ),
@@ -317,24 +367,18 @@ class StoreQuery {
   }
 
   private static function new_customers( int $start ): int {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => '>' . gmdate( 'Y-m-d H:i:s', $start ),
-      'return'       => 'objects',
-      'limit'        => -1,
+    $users = get_users( array(
+      'role'       => 'customer',
+      'fields'     => 'ID',
+      'date_query' => array(
+        array(
+          'after'     => gmdate( 'Y-m-d H:i:s', $start ),
+          'inclusive' => true,
+        ),
+      ),
     ) );
 
-    $emails = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      $email = strtolower( (string) $order->get_billing_email() );
-
-      if ( $email ) {
-        $emails[ $email ] = true;
-      }
-    }
-
-    return count( $emails );
+    return is_array( $users ) ? count( $users ) : 0;
   }
 
   private static function total_customers(): int {
@@ -381,15 +425,6 @@ class StoreQuery {
     );
   }
 
-  private static function avg_order_value( int $start, int $end ): string {
-    $orders  = self::count_orders( $start, $end );
-    $revenue = self::sum_revenue( $start, $end );
-
-    return $orders > 0
-      ? wc_price( $revenue / $orders )
-      : __( 'No data yet', 'store-insights-for-woocommerce' );
-  }
-
   private static function orders_pending_processing(): int {
     $query = new \WC_Order_Query( array(
       'status' => array( 'wc-pending', 'wc-processing' ),
@@ -414,30 +449,5 @@ class StoreQuery {
     );
 
     return count( wc_get_products( $args ) );
-  }
-
-  private static function top_coupon( int $start, int $end ): string {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $coupons = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      foreach ( $order->get_coupon_codes() as $code ) {
-        $coupons[ $code ] = ( $coupons[ $code ] ?? 0 ) + 1;
-      }
-    }
-
-    if ( empty( $coupons ) ) {
-      return __( 'No coupons used', 'store-insights-for-woocommerce' );
-    }
-
-    arsort( $coupons );
-
-    return array_key_first( $coupons );
   }
 }
