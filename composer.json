@@ -1,0 +1,22 @@
+{
+  "name": "lucian-dev/store-insights-for-woocommerce",
+  "description": "Store insights for WooCommerce displayed directly in your dashboard.",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "StoreInsightsWoo\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "echo 'Autoload updated for StoreInsightsWoo'"
+    ]
+  }
+}
