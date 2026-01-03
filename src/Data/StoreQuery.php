@@ -138,10 +138,6 @@ class StoreQuery {
           'value' => self::refund_rate( $start, $end ),
         ),
         array(
-          'label' => __( 'Conversion proxy', 'store-insights-for-woocommerce' ),
-          'value' => __( 'Estimate', 'store-insights-for-woocommerce' ),
-        ),
-        array(
           'label' => __( 'Revenue trend vs previous week', 'store-insights-for-woocommerce' ),
           'value' => self::revenue_trend(),
         ),
@@ -364,7 +360,27 @@ class StoreQuery {
   }
 
   private static function revenue_trend(): string {
-    return __( 'Compare manually', 'store-insights-for-woocommerce' );
+
+    $now       = time();
+    $week_ago  = strtotime( '-7 days', $now );
+    $two_weeks = strtotime( '-14 days', $now );
+
+    $current  = self::sum_revenue( $week_ago, $now );
+    $previous = self::sum_revenue( $two_weeks, $week_ago );
+
+    if ( $previous <= 0 ) {
+      return __( 'No previous week data', 'store-insights-for-woocommerce' );
+    }
+
+    $diff = ( ( $current - $previous ) / $previous ) * 100;
+    $diff = round( $diff, 1 );
+
+    $sign = $diff > 0 ? '+' : '';
+
+    return sprintf(
+      __( '%s%% vs previous week', 'store-insights-for-woocommerce' ),
+      $sign . $diff
+    );
   }
 
   private static function avg_order_value( int $start, int $end ): string {
