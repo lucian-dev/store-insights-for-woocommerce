@@ -139,7 +139,7 @@ class StoreQuery {
         ),
         array(
           'label' => __( 'Revenue trend vs previous week', 'store-insights-for-woocommerce' ),
-          'value' => self::revenue_trend(),
+          'value' => self::revenue_trend( $start, $end ),
         ),
       ),
     );
@@ -359,14 +359,12 @@ class StoreQuery {
     return $rate . '%';
   }
 
-  private static function revenue_trend(): string {
+  private static function revenue_trend( int $start, int $end ): string {
 
-    $now       = time();
-    $week_ago  = strtotime( '-7 days', $now );
-    $two_weeks = strtotime( '-14 days', $now );
+    $two_weeks = strtotime( '-14 days', $end );
 
-    $current  = self::sum_revenue( $week_ago, $now );
-    $previous = self::sum_revenue( $two_weeks, $week_ago );
+    $current  = self::sum_revenue( $start, $end );
+    $previous = self::sum_revenue( $two_weeks, $start );
 
     if ( $previous <= 0 ) {
       return __( 'No previous week data', 'store-insights-for-woocommerce' );
