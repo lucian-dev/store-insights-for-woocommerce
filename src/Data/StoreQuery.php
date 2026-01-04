@@ -48,7 +48,7 @@ class StoreQuery {
 
     return array(
       'title'  => __( 'Store Today', 'store-insights-for-woocommerce' ),
-      'period' => __( 'Today (00:00 -> now)', 'store-insights-for-woocommerce' ),
+      'period' => __( 'Today: 00:00 -> now', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'Orders', 'store-insights-for-woocommerce' ),
@@ -172,7 +172,7 @@ class StoreQuery {
 
     return array(
       'title'  => __( 'Operational Overview', 'store-insights-for-woocommerce' ),
-      'period' => __( 'Mixed periods', 'store-insights-for-woocommerce' ),
+      'period' => __( '', 'store-insights-for-woocommerce' ),
       'items'  => array(
         array(
           'label' => __( 'Orders pending / processing', 'store-insights-for-woocommerce' ),

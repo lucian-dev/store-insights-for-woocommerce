@@ -50,7 +50,11 @@ class DashboardWidget {
         echo '<div class="siw-section">';
         echo '<div class="siw-section-title">';
         echo '<h4>' . esc_html( $section[ 'title' ] ) . '</h4>';
-        echo '<span>(' . esc_html( $section[ 'period' ] ) . ')</span>';
+
+        if ( ! empty( $section[ 'period' ] ) ) {
+          echo '<span>(' . esc_html( $section[ 'period' ] ) . ')</span>';
+        }
+
         echo '</div>';
 
         foreach ( $section[ 'items' ] as $item ) {
