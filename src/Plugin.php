@@ -4,15 +4,15 @@
  * Main plugin bootstrap class.
  * Handles initialization, hooks, and component loading.
  *
- * @package StoreInsightsWoo
+ * @package StorePulseWoo
  */
 
 declare ( strict_types = 1 );
 
-namespace StoreInsightsWoo;
+namespace StorePulseWoo;
 
-use StoreInsightsWoo\Assets;
-use StoreInsightsWoo\Dashboard\DashboardWidget;
+use StorePulseWoo\Assets;
+use StorePulseWoo\Dashboard\DashboardWidget;
 
 defined( 'ABSPATH' ) || exit;
 

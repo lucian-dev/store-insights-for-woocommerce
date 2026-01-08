@@ -4,17 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitae0947432e1ec7e9543a453bcabb8acf
+class ComposerStaticInit00151f79b00c87221fa34e557e391278
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'StoreInsightsWoo\\' => 17,
+            'StorePulseWoo\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'StoreInsightsWoo\\' => 
+        'StorePulseWoo\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -22,19 +22,19 @@ class ComposerStaticInitae0947432e1ec7e9543a453bcabb8acf
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'StoreInsightsWoo\\Assets' => __DIR__ . '/../..' . '/src/Assets.php',
-        'StoreInsightsWoo\\Dashboard\\DashboardWidget' => __DIR__ . '/../..' . '/src/Dashboard/DashboardWidget.php',
-        'StoreInsightsWoo\\Data\\InsightsCache' => __DIR__ . '/../..' . '/src/Data/InsightsCache.php',
-        'StoreInsightsWoo\\Data\\StoreQuery' => __DIR__ . '/../..' . '/src/Data/StoreQuery.php',
-        'StoreInsightsWoo\\Plugin' => __DIR__ . '/../..' . '/src/Plugin.php',
+        'StorePulseWoo\\Assets' => __DIR__ . '/../..' . '/src/Assets.php',
+        'StorePulseWoo\\Dashboard\\DashboardWidget' => __DIR__ . '/../..' . '/src/Dashboard/DashboardWidget.php',
+        'StorePulseWoo\\Data\\InsightsCache' => __DIR__ . '/../..' . '/src/Data/InsightsCache.php',
+        'StorePulseWoo\\Data\\StoreQuery' => __DIR__ . '/../..' . '/src/Data/StoreQuery.php',
+        'StorePulseWoo\\Plugin' => __DIR__ . '/../..' . '/src/Plugin.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitae0947432e1ec7e9543a453bcabb8acf::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitae0947432e1ec7e9543a453bcabb8acf::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitae0947432e1ec7e9543a453bcabb8acf::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit00151f79b00c87221fa34e557e391278::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit00151f79b00c87221fa34e557e391278::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit00151f79b00c87221fa34e557e391278::$classMap;
 
         }, null, ClassLoader::class);
     }

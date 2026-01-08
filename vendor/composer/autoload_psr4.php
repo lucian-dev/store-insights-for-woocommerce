@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'StoreInsightsWoo\\' => array($baseDir . '/src'),
+    'StorePulseWoo\\' => array($baseDir . '/src'),
 );

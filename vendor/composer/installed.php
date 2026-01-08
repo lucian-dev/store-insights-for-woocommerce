@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'lucian-dev/store-insights-for-woocommerce',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'lucian-dev/storepulse-for-woocommerce',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'fd95e2a64a1bb53da9cb64fb0c79fed555f4adf6',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'lucian-dev/store-insights-for-woocommerce' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        'lucian-dev/storepulse-for-woocommerce' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'fd95e2a64a1bb53da9cb64fb0c79fed555f4adf6',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

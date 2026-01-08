@@ -3,15 +3,15 @@
 /**
  * Registers and displays the Store Insights for WooCommerce dashboard widget.
  *
- * @package StoreInsightsWoo\Dashboard
+ * @package StorePulseWoo\Dashboard
  */
 
 declare ( strict_types = 1 );
 
-namespace StoreInsightsWoo\Dashboard;
+namespace StorePulseWoo\Dashboard;
 
-use StoreInsightsWoo\Data\InsightsCache;
-use StoreInsightsWoo\Data\StoreQuery;
+use StorePulseWoo\Data\InsightsCache;
+use StorePulseWoo\Data\StoreQuery;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,8 +23,8 @@ class DashboardWidget {
 
   public static function register_widget(): void {
     wp_add_dashboard_widget(
-      'store_insights_woo_widget',
-      __( 'Store Insights', 'store-insights-for-woocommerce' ),
+      'store_pulse_woo_widget',
+      __( 'Store Insights', 'storepulse-for-woocommerce' ),
       array( self::class, 'render_widget' )
     );
   }
@@ -34,7 +34,6 @@ class DashboardWidget {
 
     $cache = InsightsCache::get();
 
-// Cache miss or expired -> regenerate once
     if ( empty( $cache ) || ! empty( $cache[ 'is_expired' ] ) ) {
       $data = StoreQuery::get_metrics();
       InsightsCache::set( $data );
@@ -61,7 +60,7 @@ class DashboardWidget {
           $value = $item[ 'value' ];
 
           if ( '' === $value || null === $value ) {
-            $value = __( 'No data yet', 'store-insights-for-woocommerce' );
+            $value = __( 'No data yet', 'storepulse-for-woocommerce' );
           }
 
           echo '<div class="siw-item">';
@@ -75,18 +74,17 @@ class DashboardWidget {
 
       echo '</div>'; // .siw-insights-grid
     } else {
-      echo '<p class="siw-empty">' . esc_html__( 'No insights available yet.', 'store-insights-for-woocommerce' ) . '</p>';
+      echo '<p class="siw-empty">' . esc_html__( 'No insights available yet.', 'storepulse-for-woocommerce' ) . '</p>';
     }
 
-// Footer
     if ( ! empty( $cache[ 'generated_at' ] ) ) {
       echo '<div class="siw-footer">';
       echo '<span class="siw-meta">';
-      echo esc_html__( 'Last updated: ', 'store-insights-for-woocommerce' );
+      echo esc_html__( 'Last updated: ', 'storepulse-for-woocommerce' );
       echo esc_html( InsightsCache::format_local_time( (int) $cache[ 'generated_at' ] ) );
       echo '</span>';
       echo '<span class="siw-meta">';
-      echo esc_html__( 'Auto-refreshes on dashboard view (10 min cache).', 'store-insights-for-woocommerce' );
+      echo esc_html__( 'Auto-refreshes on dashboard view (10 min cache).', 'storepulse-for-woocommerce' );
       echo '</span>';
       echo '</div>';
     }

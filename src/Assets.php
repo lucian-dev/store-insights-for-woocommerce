@@ -3,12 +3,12 @@
 /**
  * Handles loading of assets.
  *
- * @package StoreInsightsWoo
+ * @package StorePulseWoo
  */
 
 declare ( strict_types = 1 );
 
-namespace StoreInsightsWoo;
+namespace StorePulseWoo;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,9 +23,9 @@ class Assets {
 
     wp_enqueue_style(
       'siw-admin',
-      STOREINSIGHTSWOO_URL . 'assets/css/admin.css',
+      STOREPULSEWOO_URL . 'assets/css/admin.css',
       array(),
-      STOREINSIGHTSWOO_VERSION
+      STOREPULSEWOO_VERSION
     );
 
     wp_enqueue_style( 'dashicons' );

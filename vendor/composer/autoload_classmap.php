@@ -7,9 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'StoreInsightsWoo\\Assets' => $baseDir . '/src/Assets.php',
-    'StoreInsightsWoo\\Dashboard\\DashboardWidget' => $baseDir . '/src/Dashboard/DashboardWidget.php',
-    'StoreInsightsWoo\\Data\\InsightsCache' => $baseDir . '/src/Data/InsightsCache.php',
-    'StoreInsightsWoo\\Data\\StoreQuery' => $baseDir . '/src/Data/StoreQuery.php',
-    'StoreInsightsWoo\\Plugin' => $baseDir . '/src/Plugin.php',
+    'StorePulseWoo\\Assets' => $baseDir . '/src/Assets.php',
+    'StorePulseWoo\\Dashboard\\DashboardWidget' => $baseDir . '/src/Dashboard/DashboardWidget.php',
+    'StorePulseWoo\\Data\\InsightsCache' => $baseDir . '/src/Data/InsightsCache.php',
+    'StorePulseWoo\\Data\\StoreQuery' => $baseDir . '/src/Data/StoreQuery.php',
+    'StorePulseWoo\\Plugin' => $baseDir . '/src/Plugin.php',
 );

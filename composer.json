@@ -1,5 +1,5 @@
 {
-  "name": "lucian-dev/store-insights-for-woocommerce",
+  "name": "lucian-dev/storepulse-for-woocommerce",
   "description": "Store insights for WooCommerce displayed directly in your dashboard.",
   "type": "wordpress-plugin",
   "require": {
@@ -7,7 +7,7 @@
   },
   "autoload": {
     "psr-4": {
-      "StoreInsightsWoo\\": "src/"
+      "StorePulseWoo\\": "src/"
     }
   },
   "config": {
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "post-autoload-dump": [
-      "echo 'Autoload updated for StoreInsightsWoo'"
+      "echo 'Autoload updated for StorePulseWoo'"
     ]
   }
 }
