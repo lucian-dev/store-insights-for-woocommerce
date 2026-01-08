@@ -3,19 +3,19 @@
 /**
  * Handles storing and retrieving insights cache with TTL (10 min).
  *
- * @package StorePulseWoo\Data
+ * @package StorelytWidgetWoo\Data
  */
 
 declare ( strict_types = 1 );
 
-namespace StorePulseWoo\Data;
+namespace StorelytWidgetWoo\Data;
 
 defined( 'ABSPATH' ) || exit;
 
 class InsightsCache {
 
   // Option name in wp_options.
-  private const OPTION = 'storepulse_insights_widget';
+  private const OPTION = 'storelyt_insights_widget';
   // Cache TTL = 10 minutes.
   private const TTL = 600;
 

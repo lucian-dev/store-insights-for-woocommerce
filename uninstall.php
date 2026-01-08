@@ -5,4 +5,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Clear stored cache.
-delete_option( 'storepulse_insights_widget' );
+delete_option( 'storelyt_insights_widget' );

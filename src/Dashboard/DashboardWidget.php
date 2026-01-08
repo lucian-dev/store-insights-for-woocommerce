@@ -3,15 +3,15 @@
 /**
  * Registers and displays the Store Insights for WooCommerce dashboard widget.
  *
- * @package StorePulseWoo\Dashboard
+ * @package StorelytWidgetWoo\Dashboard
  */
 
 declare ( strict_types = 1 );
 
-namespace StorePulseWoo\Dashboard;
+namespace StorelytWidgetWoo\Dashboard;
 
-use StorePulseWoo\Data\InsightsCache;
-use StorePulseWoo\Data\StoreQuery;
+use StorelytWidgetWoo\Data\InsightsCache;
+use StorelytWidgetWoo\Data\StoreQuery;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,8 +23,8 @@ class DashboardWidget {
 
   public static function register_widget(): void {
     wp_add_dashboard_widget(
-      'store_pulse_woo_widget',
-      __( 'Store Insights', 'storepulse-for-woocommerce' ),
+      'storelyt_woo_widget',
+      __( 'Store Insights', 'storelyt-widget-for-woocommerce' ),
       array( self::class, 'render_widget' )
     );
   }
@@ -60,7 +60,7 @@ class DashboardWidget {
           $value = $item[ 'value' ];
 
           if ( '' === $value || null === $value ) {
-            $value = __( 'No data yet', 'storepulse-for-woocommerce' );
+            $value = __( 'No data yet', 'storelyt-widget-for-woocommerce' );
           }
 
           echo '<div class="siw-item">';
@@ -74,17 +74,17 @@ class DashboardWidget {
 
       echo '</div>'; // .siw-insights-grid
     } else {
-      echo '<p class="siw-empty">' . esc_html__( 'No insights available yet.', 'storepulse-for-woocommerce' ) . '</p>';
+      echo '<p class="siw-empty">' . esc_html__( 'No insights available yet.', 'storelyt-widget-for-woocommerce' ) . '</p>';
     }
 
     if ( ! empty( $cache[ 'generated_at' ] ) ) {
       echo '<div class="siw-footer">';
       echo '<span class="siw-meta">';
-      echo esc_html__( 'Last updated: ', 'storepulse-for-woocommerce' );
+      echo esc_html__( 'Last updated: ', 'storelyt-widget-for-woocommerce' );
       echo esc_html( InsightsCache::format_local_time( (int) $cache[ 'generated_at' ] ) );
       echo '</span>';
       echo '<span class="siw-meta">';
-      echo esc_html__( 'Auto-refreshes on dashboard view (10 min cache).', 'storepulse-for-woocommerce' );
+      echo esc_html__( 'Auto-refreshes on dashboard view (10 min cache).', 'storelyt-widget-for-woocommerce' );
       echo '</span>';
       echo '</div>';
     }

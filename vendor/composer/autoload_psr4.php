@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'StorePulseWoo\\' => array($baseDir . '/src'),
+    'StorelytWidgetWoo\\' => array($baseDir . '/src'),
 );

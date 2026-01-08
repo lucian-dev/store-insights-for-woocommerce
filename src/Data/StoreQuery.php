@@ -3,12 +3,12 @@
 /**
  * Collects WooCommerce store metrics for widget.
  *
- * @package StorePulseWoo\Data
+ * @package StorelytWidgetWoo\Data
  */
 
 declare ( strict_types = 1 );
 
-namespace StorePulseWoo\Data;
+namespace StorelytWidgetWoo\Data;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,19 +46,19 @@ class StoreQuery {
     $refunds = self::sum_refunds( $start, $end );
 
     return array(
-      'title'  => __( 'Store Today', 'storepulse-for-woocommerce' ),
-      'period' => __( 'Today: 00:00 -> now', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Store Today', 'storelyt-widget-for-woocommerce' ),
+      'period' => __( 'Today: 00:00 -> now', 'storelyt-widget-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'Orders', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Orders', 'storelyt-widget-for-woocommerce' ),
           'value' => $orders,
         ),
         array(
-          'label' => __( 'Revenue', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Revenue', 'storelyt-widget-for-woocommerce' ),
           'value' => wc_price( $revenue ),
         ),
         array(
-          'label' => __( 'Refunds', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Refunds', 'storelyt-widget-for-woocommerce' ),
           'value' => wc_price( $refunds ),
         ),
       ),
@@ -72,23 +72,23 @@ class StoreQuery {
     $refunds         = self::sum_refunds( $start, $end );
 
     return array(
-      'title'  => __( 'Last 7 Days', 'storepulse-for-woocommerce' ),
-      'period' => __( 'Rolling last 7 days', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Last 7 Days', 'storelyt-widget-for-woocommerce' ),
+      'period' => __( 'Rolling last 7 days', 'storelyt-widget-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'Orders', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Orders', 'storelyt-widget-for-woocommerce' ),
           'value' => $orders,
         ),
         array(
-          'label' => __( 'Revenue', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Revenue', 'storelyt-widget-for-woocommerce' ),
           'value' => wc_price( $revenue ),
         ),
         array(
-          'label' => __( 'Avg order value', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Avg order value', 'storelyt-widget-for-woocommerce' ),
           'value' => $avg_order_value,
         ),
         array(
-          'label' => __( 'Refunds', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Refunds', 'storelyt-widget-for-woocommerce' ),
           'value' => wc_price( $refunds ),
         ),
       ),
@@ -102,23 +102,23 @@ class StoreQuery {
     $top_payment_method = self::top_payment_method( $start, $end );
 
     return array(
-      'title'  => __( 'Best Performers', 'storepulse-for-woocommerce' ),
-      'period' => __( 'Last 30 days', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Best Performers', 'storelyt-widget-for-woocommerce' ),
+      'period' => __( 'Last 30 days', 'storelyt-widget-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'Best selling product', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Best selling product', 'storelyt-widget-for-woocommerce' ),
           'value' => $best_product,
         ),
         array(
-          'label' => __( 'Best category', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Best category', 'storelyt-widget-for-woocommerce' ),
           'value' => $best_category,
         ),
         array(
-          'label' => __( 'Top coupon', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Top coupon', 'storelyt-widget-for-woocommerce' ),
           'value' => $top_coupon,
         ),
         array(
-          'label' => __( 'Top payment method', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Top payment method', 'storelyt-widget-for-woocommerce' ),
           'value' => $top_payment_method,
         ),
       ),
@@ -130,15 +130,15 @@ class StoreQuery {
     $total_customers = self::total_customers();
 
     return array(
-      'title'  => __( 'Customers', 'storepulse-for-woocommerce' ),
-      'period' => __( '*registered customers', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Customers', 'storelyt-widget-for-woocommerce' ),
+      'period' => __( '*registered customers', 'storelyt-widget-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'New customers (7 days)', 'storepulse-for-woocommerce' ),
+          'label' => __( 'New customers (7 days)', 'storelyt-widget-for-woocommerce' ),
           'value' => $new_customers,
         ),
         array(
-          'label' => __( 'Total customers', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Total customers', 'storelyt-widget-for-woocommerce' ),
           'value' => $total_customers,
         ),
       ),
@@ -150,15 +150,15 @@ class StoreQuery {
     $revenue_trend = self::revenue_trend( $start, $end );
 
     return array(
-      'title'  => __( 'Quick Health Signals', 'storepulse-for-woocommerce' ),
-      'period' => __( 'Last 7 days', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Quick Health Signals', 'storelyt-widget-for-woocommerce' ),
+      'period' => __( 'Last 7 days', 'storelyt-widget-for-woocommerce' ),
       'items'  => array(
         array(
-          'label' => __( 'Refund rate', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Refund rate', 'storelyt-widget-for-woocommerce' ),
           'value' => $refund_rate,
         ),
         array(
-          'label' => __( 'Revenue trend vs previous week', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Revenue trend vs previous week', 'storelyt-widget-for-woocommerce' ),
           'value' => $revenue_trend,
         ),
       ),
@@ -170,15 +170,15 @@ class StoreQuery {
     $low_stock_products        = self::low_stock_count();
 
     return array(
-      'title'  => __( 'Operational Overview', 'storepulse-for-woocommerce' ),
+      'title'  => __( 'Operational Overview', 'storelyt-widget-for-woocommerce' ),
       'period' => '',
       'items'  => array(
         array(
-          'label' => __( 'Orders pending / processing', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Orders pending / processing', 'storelyt-widget-for-woocommerce' ),
           'value' => $orders_pending_processing,
         ),
         array(
-          'label' => __( 'Low stock products', 'storepulse-for-woocommerce' ),
+          'label' => __( 'Low stock products', 'storelyt-widget-for-woocommerce' ),
           'value' => $low_stock_products,
         ),
       ),
@@ -247,7 +247,7 @@ class StoreQuery {
 
     return $orders > 0
       ? wc_price( $revenue / $orders )
-      : __( 'No data yet', 'storepulse-for-woocommerce' );
+      : __( 'No data yet', 'storelyt-widget-for-woocommerce' );
   }
 
   private static function best_product( int $start, int $end ): string {
@@ -269,7 +269,7 @@ class StoreQuery {
     }
 
     if ( empty( $counts ) ) {
-      return __( 'No data yet', 'storepulse-for-woocommerce' );
+      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
     }
 
     arsort( $counts );
@@ -303,14 +303,14 @@ class StoreQuery {
     }
 
     if ( empty( $counts ) ) {
-      return __( 'No data yet', 'storepulse-for-woocommerce' );
+      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
     }
 
     arsort( $counts );
     $cat_id = array_key_first( $counts );
     $term   = get_term( $cat_id, 'product_cat' );
 
-    return $term && ! is_wp_error( $term ) ? $term->name : __( 'Unknown', 'storepulse-for-woocommerce' );
+    return $term && ! is_wp_error( $term ) ? $term->name : __( 'Unknown', 'storelyt-widget-for-woocommerce' );
   }
 
   private static function top_coupon( int $start, int $end ): string {
@@ -330,7 +330,7 @@ class StoreQuery {
     }
 
     if ( empty( $coupons ) ) {
-      return __( 'No coupons used', 'storepulse-for-woocommerce' );
+      return __( 'No coupons used', 'storelyt-widget-for-woocommerce' );
     }
 
     arsort( $coupons );
@@ -357,7 +357,7 @@ class StoreQuery {
     }
 
     if ( empty( $methods ) ) {
-      return __( 'No data yet', 'storepulse-for-woocommerce' );
+      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
     }
 
     arsort( $methods );
@@ -394,7 +394,7 @@ class StoreQuery {
     $refunds = self::sum_refunds( $start, $end );
 
     if ( $orders <= 0 ) {
-      return __( 'No data yet', 'storepulse-for-woocommerce' );
+      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
     }
 
     $rate = ( $refunds > 0 ) ? round( ( $refunds / max( 1, self::sum_revenue( $start, $end ) ) ) * 100, 2 ) : 0;
@@ -410,7 +410,7 @@ class StoreQuery {
     $previous = self::sum_revenue( $two_weeks, $start );
 
     if ( $previous <= 0 ) {
-      return __( 'No previous week data', 'storepulse-for-woocommerce' );
+      return __( 'No previous week data', 'storelyt-widget-for-woocommerce' );
     }
 
     $diff = ( ( $current - $previous ) / $previous ) * 100;
@@ -419,7 +419,7 @@ class StoreQuery {
     $sign = $diff > 0 ? '+' : '';
 
     return sprintf(
-      __( '%s%% vs previous week', 'storepulse-for-woocommerce' ),
+      __( '%s%% vs previous week', 'storelyt-widget-for-woocommerce' ),
       $sign . $diff
     );
   }
