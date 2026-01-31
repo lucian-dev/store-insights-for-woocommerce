@@ -10,13 +10,13 @@ declare ( strict_types = 1 );
 
 namespace StorelytWidgetWoo\Data;
 
+use StorelytWidgetWoo\Data\MetricsRepository;
+
 defined( 'ABSPATH' ) || exit;
 
 class StoreQuery {
-
   // Collect and return store metrics.
   public static function get_metrics(): array {
-
     if ( ! class_exists( 'WooCommerce' ) ) {
       return self::empty_state();
     }
@@ -41,9 +41,9 @@ class StoreQuery {
 
   // Section builders.
   private static function store_today( int $start, int $end ): array {
-    $orders  = self::count_orders( $start, $end );
-    $revenue = self::sum_revenue( $start, $end );
-    $refunds = self::sum_refunds( $start, $end );
+    $orders  = MetricsRepository::count_orders( $start, $end );
+    $revenue = MetricsRepository::sum_revenue( $start, $end );
+    $refunds = MetricsRepository::sum_refunds( $start, $end );
 
     return array(
       'title'  => __( 'Store Today', 'storelyt-widget-for-woocommerce' ),
@@ -66,10 +66,10 @@ class StoreQuery {
   }
 
   private static function last_7_days( int $start, int $end ): array {
-    $orders          = self::count_orders( $start, $end );
-    $revenue         = self::sum_revenue( $start, $end );
-    $avg_order_value = self::avg_order_value( $start, $end );
-    $refunds         = self::sum_refunds( $start, $end );
+    $orders          = MetricsRepository::count_orders( $start, $end );
+    $revenue         = MetricsRepository::sum_revenue( $start, $end );
+    $avg_order_value = MetricsRepository::avg_order_value( $start, $end );
+    $refunds         = MetricsRepository::sum_refunds( $start, $end );
 
     return array(
       'title'  => __( 'Last 7 Days', 'storelyt-widget-for-woocommerce' ),
@@ -96,10 +96,11 @@ class StoreQuery {
   }
 
   private static function best_performers( int $start, int $end ): array {
-    $best_product       = self::best_product( $start, $end );
-    $best_category      = self::best_category( $start, $end );
-    $top_coupon         = self::top_coupon( $start, $end );
-    $top_payment_method = self::top_payment_method( $start, $end );
+    $best_product        = MetricsRepository::best_product( $start, $end );
+    $best_category       = MetricsRepository::best_category( $start, $end );
+    $top_coupon          = MetricsRepository::top_coupon( $start, $end );
+    $top_payment_method  = MetricsRepository::top_payment_method( $start, $end );
+    $top_shipping_method = MetricsRepository::top_shipping_method( $start, $end );
 
     return array(
       'title'  => __( 'Best Performers', 'storelyt-widget-for-woocommerce' ),
@@ -121,13 +122,18 @@ class StoreQuery {
           'label' => __( 'Top payment method', 'storelyt-widget-for-woocommerce' ),
           'value' => $top_payment_method,
         ),
+        array(
+          'label' => __( 'Top shipping method', 'storelyt-widget-for-woocommerce' ),
+          'value' => $top_shipping_method,
+        ),
       ),
     );
   }
 
   private static function customers( int $week_ago ): array {
-    $new_customers   = self::new_customers( $week_ago );
-    $total_customers = self::total_customers();
+    $new_customers       = MetricsRepository::new_customers( $week_ago );
+    $returning_customers = MetricsRepository::returning_customers( $week_ago );
+    $total_customers     = MetricsRepository::total_customers();
 
     return array(
       'title'  => __( 'Customers', 'storelyt-widget-for-woocommerce' ),
@@ -138,6 +144,10 @@ class StoreQuery {
           'value' => $new_customers,
         ),
         array(
+          'label' => __( 'Returning customers (7 days)', 'storelyt-widget-for-woocommerce' ),
+          'value' => $returning_customers,
+        ),
+        array(
           'label' => __( 'Total customers', 'storelyt-widget-for-woocommerce' ),
           'value' => $total_customers,
         ),
@@ -146,8 +156,9 @@ class StoreQuery {
   }
 
   private static function health_signals( int $start, int $end ): array {
-    $refund_rate   = self::refund_rate( $start, $end );
-    $revenue_trend = self::revenue_trend( $start, $end );
+    $refund_rate   = MetricsRepository::refund_rate( $start, $end );
+    $failure_rate  = MetricsRepository::order_failure_rate( $start, $end );
+    $revenue_trend = MetricsRepository::revenue_trend( $start, $end );
 
     return array(
       'title'  => __( 'Quick Health Signals', 'storelyt-widget-for-woocommerce' ),
@@ -158,6 +169,10 @@ class StoreQuery {
           'value' => $refund_rate,
         ),
         array(
+          'label' => __( 'Order failure rate', 'storelyt-widget-for-woocommerce' ),
+          'value' => $failure_rate,
+        ),
+        array(
           'label' => __( 'Revenue trend vs previous week', 'storelyt-widget-for-woocommerce' ),
           'value' => $revenue_trend,
         ),
@@ -166,8 +181,9 @@ class StoreQuery {
   }
 
   private static function operational_overview(): array {
-    $orders_pending_processing = self::orders_pending_processing();
-    $low_stock_products        = self::low_stock_count();
+    $orders_pending_processing = MetricsRepository::orders_pending_processing();
+    $orders_on_hold            = MetricsRepository::orders_on_hold();
+    $low_stock_products        = MetricsRepository::low_stock_count();
 
     return array(
       'title'  => __( 'Operational Overview', 'storelyt-widget-for-woocommerce' ),
@@ -176,6 +192,10 @@ class StoreQuery {
         array(
           'label' => __( 'Orders pending / processing', 'storelyt-widget-for-woocommerce' ),
           'value' => $orders_pending_processing,
+        ),
+        array(
+          'label' => __( 'Orders On-Hold', 'storelyt-widget-for-woocommerce' ),
+          'value' => $orders_on_hold,
         ),
         array(
           'label' => __( 'Low stock products', 'storelyt-widget-for-woocommerce' ),
@@ -191,262 +211,5 @@ class StoreQuery {
       'generated_at' => time(),
       'sections'     => array(),
     );
-  }
-
-  // Helper query methods.
-  private static function count_orders( int $start, int $end ): int {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'ids',
-      'limit'        => -1,
-    ) );
-
-    return count( $query->get_orders() );
-  }
-
-  private static function sum_revenue( int $start, int $end ): float {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $sum = 0.0;
-
-    foreach ( $query->get_orders() as $order ) {
-      $sum += (float) $order->get_total();
-    }
-
-    return round( $sum, 2 );
-  }
-
-  private static function sum_refunds( int $start, int $end ): float {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-refunded' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $sum = 0.0;
-
-    foreach ( $query->get_orders() as $order ) {
-      foreach ( $order->get_refunds() as $refund ) {
-        $sum += abs( (float) $refund->get_amount() );
-      }
-    }
-
-    return round( $sum, 2 );
-  }
-
-  private static function avg_order_value( int $start, int $end ): string {
-    $orders  = self::count_orders( $start, $end );
-    $revenue = self::sum_revenue( $start, $end );
-
-    return $orders > 0
-      ? wc_price( $revenue / $orders )
-      : __( 'No data yet', 'storelyt-widget-for-woocommerce' );
-  }
-
-  private static function best_product( int $start, int $end ): string {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $counts = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      foreach ( $order->get_items() as $item ) {
-        $name            = $item->get_name();
-        $qty             = (int) $item->get_quantity();
-        $counts[ $name ] = ( $counts[ $name ] ?? 0 ) + $qty;
-      }
-    }
-
-    if ( empty( $counts ) ) {
-      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
-    }
-
-    arsort( $counts );
-    $name = array_key_first( $counts );
-
-    return sprintf( '%s (%d sold)', $name, $counts[ $name ] );
-  }
-
-  private static function best_category( int $start, int $end ): string {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $counts = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      foreach ( $order->get_items() as $item ) {
-        $product = $item->get_product();
-
-        if ( ! $product ) {
-          continue;
-        }
-
-        foreach ( $product->get_category_ids() as $cat_id ) {
-          $counts[ $cat_id ] = ( $counts[ $cat_id ] ?? 0 ) + (int) $item->get_quantity();
-        }
-      }
-    }
-
-    if ( empty( $counts ) ) {
-      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
-    }
-
-    arsort( $counts );
-    $cat_id = array_key_first( $counts );
-    $term   = get_term( $cat_id, 'product_cat' );
-
-    return $term && ! is_wp_error( $term ) ? $term->name : __( 'Unknown', 'storelyt-widget-for-woocommerce' );
-  }
-
-  private static function top_coupon( int $start, int $end ): string {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $coupons = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      foreach ( $order->get_coupon_codes() as $code ) {
-        $coupons[ $code ] = ( $coupons[ $code ] ?? 0 ) + 1;
-      }
-    }
-
-    if ( empty( $coupons ) ) {
-      return __( 'No coupons used', 'storelyt-widget-for-woocommerce' );
-    }
-
-    arsort( $coupons );
-
-    return array_key_first( $coupons );
-  }
-
-  private static function top_payment_method( int $start, int $end ): string {
-    $query = new \WC_Order_Query( array(
-      'status'       => array( 'wc-completed', 'wc-processing' ),
-      'date_created' => gmdate( 'Y-m-d H:i:s', $start ) . '...' . gmdate( 'Y-m-d H:i:s', $end ),
-      'return'       => 'objects',
-      'limit'        => -1,
-    ) );
-
-    $methods = array();
-
-    foreach ( $query->get_orders() as $order ) {
-      $method = $order->get_payment_method_title();
-
-      if ( $method ) {
-        $methods[ $method ] = ( $methods[ $method ] ?? 0 ) + 1;
-      }
-    }
-
-    if ( empty( $methods ) ) {
-      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
-    }
-
-    arsort( $methods );
-
-    return array_key_first( $methods );
-  }
-
-  private static function new_customers( int $start ): int {
-    $users = get_users( array(
-      'role'       => 'customer',
-      'fields'     => 'ID',
-      'date_query' => array(
-        array(
-          'after'     => gmdate( 'Y-m-d H:i:s', $start ),
-          'inclusive' => true,
-        ),
-      ),
-    ) );
-
-    return is_array( $users ) ? count( $users ) : 0;
-  }
-
-  private static function total_customers(): int {
-    $users = get_users( array(
-      'role'   => 'customer',
-      'fields' => 'ID',
-    ) );
-
-    return is_array( $users ) ? count( $users ) : 0;
-  }
-
-  private static function refund_rate( int $start, int $end ): string {
-    $orders  = self::count_orders( $start, $end );
-    $refunds = self::sum_refunds( $start, $end );
-
-    if ( $orders <= 0 ) {
-      return __( 'No data yet', 'storelyt-widget-for-woocommerce' );
-    }
-
-    $rate = ( $refunds > 0 ) ? round( ( $refunds / max( 1, self::sum_revenue( $start, $end ) ) ) * 100, 2 ) : 0;
-
-    return $rate . '%';
-  }
-
-  private static function revenue_trend( int $start, int $end ): string {
-
-    $two_weeks = strtotime( '-14 days', $end );
-
-    $current  = self::sum_revenue( $start, $end );
-    $previous = self::sum_revenue( $two_weeks, $start );
-
-    if ( $previous <= 0 ) {
-      return __( 'No previous week data', 'storelyt-widget-for-woocommerce' );
-    }
-
-    $diff = ( ( $current - $previous ) / $previous ) * 100;
-    $diff = round( $diff, 1 );
-
-    $sign = $diff > 0 ? '+' : '';
-
-    return sprintf(
-      __( '%s%% vs previous week', 'storelyt-widget-for-woocommerce' ),
-      $sign . $diff
-    );
-  }
-
-  private static function orders_pending_processing(): int {
-    $query = new \WC_Order_Query( array(
-      'status' => array( 'wc-pending', 'wc-processing' ),
-      'return' => 'ids',
-      'limit'  => -1,
-    ) );
-
-    return count( $query->get_orders() );
-  }
-
-  private static function low_stock_count(): int {
-
-    if ( ! function_exists( 'wc_get_low_stock_amount' ) ) {
-      return 0;
-    }
-
-    $args = array(
-      'status'    => 'publish',
-      'limit'     => -1,
-      'low_stock' => true,
-      'return'    => 'ids',
-    );
-
-    return count( wc_get_products( $args ) );
   }
 }

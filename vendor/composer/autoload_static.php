@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit8426e5c0379c210c3fd8498b70720c2a
 {
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'StorelytWidgetWoo\\' => 18,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'StorelytWidgetWoo\\' => 
+        'StorelytWidgetWoo\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -25,6 +25,7 @@ class ComposerStaticInit8426e5c0379c210c3fd8498b70720c2a
         'StorelytWidgetWoo\\Assets' => __DIR__ . '/../..' . '/src/Assets.php',
         'StorelytWidgetWoo\\Dashboard\\DashboardWidget' => __DIR__ . '/../..' . '/src/Dashboard/DashboardWidget.php',
         'StorelytWidgetWoo\\Data\\InsightsCache' => __DIR__ . '/../..' . '/src/Data/InsightsCache.php',
+        'StorelytWidgetWoo\\Data\\MetricsRepository' => __DIR__ . '/../..' . '/src/Data/MetricsRepository.php',
         'StorelytWidgetWoo\\Data\\StoreQuery' => __DIR__ . '/../..' . '/src/Data/StoreQuery.php',
         'StorelytWidgetWoo\\Plugin' => __DIR__ . '/../..' . '/src/Plugin.php',
     );

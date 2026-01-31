@@ -3,7 +3,7 @@
  * Plugin Name: Storelyt Widget for WooCommerce
  * Plugin URI: https://lucian-web.dev/store-insights-for-woocommerce
  * Description: Store insights for WooCommerce displayed directly in your dashboard.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Lucian-DEV
  * Author URI: https://lucian-web.dev
  * Text Domain: storelyt-widget-for-woocommerce
@@ -27,7 +27,7 @@ GNU General Public License for more details.
 defined( 'ABSPATH' ) || exit;
 
 // Define plugin constants.
-define( 'STORELYTWIDGETWOO_VERSION', '1.0.0' );
+define( 'STORELYTWIDGETWOO_VERSION', '1.1.0' );
 define( 'STORELYTWIDGETWOO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'STORELYTWIDGETWOO_URL', plugin_dir_url( __FILE__ ) );
 

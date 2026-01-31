@@ -10,6 +10,7 @@ return array(
     'StorelytWidgetWoo\\Assets' => $baseDir . '/src/Assets.php',
     'StorelytWidgetWoo\\Dashboard\\DashboardWidget' => $baseDir . '/src/Dashboard/DashboardWidget.php',
     'StorelytWidgetWoo\\Data\\InsightsCache' => $baseDir . '/src/Data/InsightsCache.php',
+    'StorelytWidgetWoo\\Data\\MetricsRepository' => $baseDir . '/src/Data/MetricsRepository.php',
     'StorelytWidgetWoo\\Data\\StoreQuery' => $baseDir . '/src/Data/StoreQuery.php',
     'StorelytWidgetWoo\\Plugin' => $baseDir . '/src/Plugin.php',
 );

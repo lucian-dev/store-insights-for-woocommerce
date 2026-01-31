@@ -4,7 +4,7 @@ Tags: woocommerce, store insights, widget, dashboard analytics, sales
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ WooCommerce dashboard analytics widget showing orders, revenue, refunds, custome
 
 Storelyt Widget for WooCommerce adds an analytics widget to your WordPress dashboard, giving you instant visibility into how your store is performing.
 
-The widget displays key WooCommerce metrics such as daily sales, revenue trends, refunds, customer growth, and operational signals, all calculated using native WooCommerce data.
+The widget displays key WooCommerce metrics such as daily sales, revenue trends, refunds, customer growth, returning customers, and operational signals, all calculated using native WooCommerce data.
 
 No setup required. Just install, activate, and view your store insights every time you open the dashboard.
 
@@ -27,8 +27,9 @@ Note: WooCommerce is a trademark of Automattic Inc. This plugin is not affiliate
 - 📊 **Dashboard analytics widget**: View your store performance directly on the WordPress dashboard.
 - 🔄 **Automatic refresh with smart caching**: Data refreshes automatically on dashboard view with a lightweight 10-minute cache.
 - 💰 **Sales & revenue insights**: Orders, revenue, refunds, and average order value for today and the last 7 days.
-- 📈 **Performance & health signals**: Revenue trends, refund rate, and operational indicators to quickly spot issues.
-- 🛒 **Best performers overview**: Best-selling products, top categories, and most used coupons.
+- 📈 **Performance & health signals**: Revenue trend vs previous week, refund rate, and order failure rate.
+- 🛒 **Best performers overview**: Best-selling products, top categories, top coupons, payment methods, and shipping methods.
+- ⚙️ **Operational visibility**: Pending, processing, on-hold orders, and low stock product alerts.
 - 🔐 **Secure & lightweight**: Uses native WooCommerce queries. No external APIs, no data leaves your site.
 
 == Installation ==
@@ -65,6 +66,13 @@ Yes. Storelyt Widget for WooCommerce is completely free.
 1. Store Insights widget displayed on the WordPress dashboard
 
 == Changelog ==
+
+= 1.1.0 =
+- Added top shipping method to Best Performers
+- Added returning customers metric (last 7 days)
+- Added order failure rate to health signals
+- Added on-hold orders count to operational overview
+- Improved internal metrics structure and performance
 
 = 1.0.0 =
 Initial release.
